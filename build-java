@@ -1,0 +1,15 @@
+#!/bin/bash
+
+for file in $(ls -1 *.java)
+do
+    # build class file
+    javac ${file}
+    # get class name
+    cname=${file%%.*}
+    # create script file name
+    sfile=$(echo ${cname} | tr '[:upper:]' '[:lower:]')
+    # write script file
+    echo -e '#!/bin/bash\n\njava '${cname}' $@' > ${sfile}
+    # make script file executable
+    chmod +x ${sfile}
+done
